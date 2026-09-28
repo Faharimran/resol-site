@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="RESOL">
+  <g fill="none" stroke="currentColor" stroke-width="5.5" stroke-linecap="butt">
+    <circle cx="29" cy="29" r="9"/><circle cx="71" cy="29" r="9"/>
+    <circle cx="29" cy="71" r="9"/><circle cx="71" cy="71" r="9"/>
+    <path d="M38 29v42M62 29v42M29 38h42M29 62h42"/>
+  </g>
+</svg>

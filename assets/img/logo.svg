@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 72" role="img" aria-label="RESOL — Legal, Regulatory &amp; Compliance">
+  <g fill="none" stroke="#1D1F25" stroke-width="5.5" stroke-linecap="butt"
+     transform="translate(6 6) scale(.6)">
+    <circle cx="29" cy="29" r="9"/><circle cx="71" cy="29" r="9"/>
+    <circle cx="29" cy="71" r="9"/><circle cx="71" cy="71" r="9"/>
+    <path d="M38 29v42M62 29v42M29 38h42M29 62h42"/>
+  </g>
+  <text x="80" y="40" font-family="Georgia, 'Times New Roman', serif" font-size="27" font-weight="600"
+        letter-spacing="3.6" fill="#0B0B0D">RESOL</text>
+  <text x="82" y="56" font-family="Helvetica, Arial, sans-serif" font-size="7.6"
+        letter-spacing="3.6" fill="#5C6069">LEGAL · REGULATORY · COMPLIANCE</text>
+</svg>
