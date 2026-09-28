@@ -39,6 +39,14 @@
     "email": "info@resolservices.in",
     "telephone": "+91-81303-47795",
     "sameAs": ["https://www.linkedin.com/company/resol-services/"],
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "A-1208, Tower 4, NX One, Techzone 4",
+      "addressLocality": "Greater Noida West",
+      "addressRegion": "Uttar Pradesh",
+      "postalCode": "201318",
+      "addressCountry": "IN"
+    },
     "areaServed": { "@type": "Country", "name": "India" }
   }
 }
@@ -291,7 +299,12 @@
           <p class="contact-card__note">For urgent matters — notices, deadlines and interim relief.</p>
         </div>
 
-          <!-- Office card removed until the address is confirmed; see git history to restore. -->
+        <div class="contact-card reveal">
+          <p class="contact-card__head"><svg class="icon" aria-hidden="true"><use href="#i-pin"></use></svg> Office</p>
+          <p class="contact-card__value">A-1208, Tower 4<br>NX One, Techzone 4<br>Greater Noida West<br>Uttar Pradesh 201318</p>
+          <p class="contact-card__note">Visits by appointment. Video consultations available across India.</p>
+        </div>
+
 
         <div class="contact-card reveal">
           <p class="contact-card__head"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg> Hours</p>
@@ -308,7 +321,30 @@
   </div>
 </section>
 
-<!-- Map section removed until the address is confirmed; see git history to restore. -->
+<!-- ============================= MAP =============================== -->
+<section class="panel panel--grey section section--tight" id="find-us">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker reveal">Find us</span>
+      <h2 class="h2 reveal">Where we sit.</h2>
+      <p class="lede reveal">NX One, Techzone 4 — on the Noida&ndash;Greater Noida West corridor, a short drive from the Noida Extension sectors.</p>
+    </div>
+    <div class="map-frame reveal">
+      <iframe
+        src="https://www.google.com/maps?q=A-1208+Tower+4+NX+One+Techzone+4+Greater+Noida+West+Uttar+Pradesh+201318&amp;output=embed"
+        title="Map showing RESOL at A-1208, Tower 4, NX One, Techzone 4, Greater Noida West"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen></iframe>
+    </div>
+    <p class="muted" style="margin-top:1rem;font-size:var(--step--1)">
+      <a class="link" href="https://www.google.com/maps/search/?api=1&amp;query=A-1208+Tower+4+NX+One+Techzone+4+Greater+Noida+West+Uttar+Pradesh+201318" target="_blank" rel="noopener noreferrer">
+        Open in Google Maps
+        <svg class="icon icon--sm" aria-hidden="true"><use href="#i-arrow"></use></svg>
+      </a>
+    </p>
+  </div>
+</section>
 
 <!-- ============================= FAQ =============================== -->
 <section class="panel section">
@@ -430,6 +466,7 @@
             <li><a href="mailto:info@resolservices.in">info@resolservices.in</a></li>
             <li><a href="tel:+918130347795">+91 81303 47795</a></li>
             <li><span class="muted">Mon–Fri, 10:00–19:00 IST</span></li>
+            <li><span class="muted">NX One, Techzone 4<br>Greater Noida West, UP 201318</span></li>
           </ul>
         </div>
       </div>

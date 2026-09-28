@@ -1688,10 +1688,21 @@ select.control option { background: var(--grey-800); color: var(--white); }
   display: grid;
   place-items: center;
   text-align: center;
-  padding: 2rem;
 }
-.map-frame iframe { width: 100%; height: 100%; min-height: 380px; border: 0; filter: grayscale(1) invert(.92) contrast(.86); }
-.map-frame__placeholder { display: grid; gap: .75rem; place-items: center; color: var(--muted); font-size: var(--step--1); }
+.map-frame iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  border: 0;
+  display: block;
+  /* Google's map is light; tone it down so it sits in a dark page without glaring */
+  filter: grayscale(.55) contrast(.92) brightness(.88);
+}
+.map-frame__placeholder {
+  display: grid; gap: .75rem; place-items: center;
+  padding: 2rem;
+  color: var(--muted); font-size: var(--step--1);
+}
 .map-frame__placeholder .icon { width: 30px; height: 30px; color: var(--maroon-glow); }
 
 /* --------------------------------------------------------------------------
