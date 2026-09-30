@@ -6,16 +6,27 @@
   "use strict";
 
   /* ----------------------------------------------------------------------
-     CONFIGURE ME — contact form delivery
+     CONFIGURE ME — where contact form enquiries go
      ----------------------------------------------------------------------
-     Paste an endpoint from Formspree (https://formspree.io) or Web3Forms
-     (https://web3forms.com) below, e.g.:
-         var FORM_ENDPOINT = "https://formspree.io/f/xxxxxxxx";
-     While this is empty the form validates, then hands the enquiry to the
-     visitor's email client as a pre-filled draft to CONTACT_EMAIL.
+     Web3Forms (free, no account): go to https://web3forms.com, enter the
+     inbox you want enquiries delivered to, and they email you an access
+     key. Paste it below and you are done:
+
+         var WEB3FORMS_KEY = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx";
+
+     Alternatively, paste a Formspree endpoint into FORM_ENDPOINT instead.
+     WEB3FORMS_KEY wins if both are set.
+
+     With neither set, the form still validates, then hands the enquiry to
+     the visitor's email client as a pre-filled draft to CONTACT_EMAIL.
+     That works on a desktop with a configured mail client and silently
+     fails for many mobile visitors, so it is a stopgap, not a solution.
      -------------------------------------------------------------------- */
+  var WEB3FORMS_KEY = "";
   var FORM_ENDPOINT = "";
   var CONTACT_EMAIL = "info@resolservices.in";
+
+  var WEB3FORMS_URL = "https://api.web3forms.com/submit";
 
   var prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var $  = function (sel, ctx) { return (ctx || document).querySelector(sel); };
@@ -376,7 +387,7 @@
       var data = {};
       fd.forEach(function (v, k) { data[k] = v; });
 
-      if (!FORM_ENDPOINT) {
+      if (!WEB3FORMS_KEY && !FORM_ENDPOINT) {
         showStatus("ok", "<span>Opening your email app with this enquiry ready to send. If nothing happens, write to <a href=\"mailto:" + CONTACT_EMAIL + "\">" + CONTACT_EMAIL + "</a>.</span>");
         mailtoFallback(data);
         return;
@@ -385,13 +396,52 @@
       setBusy(true);
       if (status) status.className = "form__status";
 
-      fetch(FORM_ENDPOINT, {
-        method: "POST",
-        headers: { Accept: "application/json" },
-        body: fd
-      }).then(function (res) {
-        if (!res.ok) throw new Error("Request failed: " + res.status);
+      var request;
+      if (WEB3FORMS_KEY) {
+        // Web3Forms takes JSON, and reads some reserved field names:
+        // subject, from_name and replyto shape the email we receive, so a
+        // reply goes straight back to the enquirer rather than to ourselves.
+        var payload = {
+          access_key: WEB3FORMS_KEY,
+          subject: "Website enquiry — " + (data.service || "General") +
+                   (data.company ? " — " + data.company : ""),
+          from_name: (data.name || "Website visitor") + " via resolservices.in",
+          replyto: data.email,
+          name: data.name,
+          email: data.email,
+          phone: data.phone || "—",
+          organisation: data.company || "—",
+          industry: data.industry || "—",
+          service: data.service || "—",
+          message: data.message,
+          consent: data.consent ? "Accepted" : "Not accepted"
+        };
+        request = fetch(WEB3FORMS_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify(payload)
+        }).then(function (res) {
+          return res.json().catch(function () { return {}; }).then(function (json) {
+            // Web3Forms answers 200 with success:false on a bad key, so the
+            // status code alone is not enough to call it delivered.
+            if (!res.ok || json.success === false) {
+              throw new Error(json.message || "Request failed: " + res.status);
+            }
+          });
+        });
+      } else {
+        request = fetch(FORM_ENDPOINT, {
+          method: "POST",
+          headers: { Accept: "application/json" },
+          body: fd
+        }).then(function (res) {
+          if (!res.ok) throw new Error("Request failed: " + res.status);
+        });
+      }
+
+      request.then(function () {
         form.reset();
+        $$(".field", form).forEach(function (f) { f.classList.remove("has-error"); });
         showStatus("ok", "<span>Thank you — your enquiry has reached us. A member of the team will respond shortly.</span>");
       }).catch(function () {
         showStatus("err", "<span>We could not send that automatically. Please email <a href=\"mailto:" + CONTACT_EMAIL + "\">" + CONTACT_EMAIL + "</a> and we will pick it up right away.</span>");
